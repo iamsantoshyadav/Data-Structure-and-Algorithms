@@ -5,9 +5,9 @@
 void createFirst();  //Function to create node in first
 void createLast();//function to create node in last
 void createLoc();// Function to create node at any location
-//void deleteFirst();// Function to delete node from front
-//void deleteLast();//Function to delete node from last
-//void deleteLoc();//function to delete node at any location
+void deleteFirst();// Function to delete node from front
+void deleteLast();//Function to delete node from last
+void deleteLoc();//function to delete node at any location
 void display();// function to display nodes
 typedef struct node
 {
@@ -18,9 +18,9 @@ node *start=NULL;
 void main()
 {
     int ip;
-    printf("================YOU HAVE FOLLOWING CHOICES================\n");
     while(1)
     {
+        printf("============================YOU HAVE FOLLOWING CHOICES==========================\n");
         printf("1. Create Node at First.\n");
         printf("2. Create Node at Last.\n");
         printf("3. Create Node at Location.\n");
@@ -42,7 +42,7 @@ void main()
             case 3 :
                 createLoc();
                 break;
-            /*case 4 :
+            case 4 :
                 deleteFirst();
                 break;
             case 5:
@@ -51,7 +51,7 @@ void main()
             case 6:
                 deleteLoc();
                 break;
-            */case 7:
+            case 7:
                 display();
                 break;
             case 8:
@@ -133,14 +133,14 @@ void createLoc()
     }
     else
     {
-        preNode=start;//for find no of avilable nodes in linked list
+        preNode=start;//for find no of available nodes in linked list
         while(preNode->add!=NULL)
         {
             nodes++;
             preNode=preNode->add;
         }
         printf("There are %d Nodes avilable \n",nodes);
-        display();// display all the data for convenince
+        display();// dis================play all the data for convenience
         printf("Enter Location where you want to create node : ");
         scanf("%d",&location);// Get the location where we want to add node
         if(location<=nodes)
@@ -148,10 +148,10 @@ void createLoc()
             preNode=start;
             while(i!=location-1)
             {
-                preNode=preNode->add;// Get the address of the node avilable before the given location
+                preNode=preNode->add;// Get the address of the node available before the given location
                 i++;
             }
-            newNode->add=preNode->add;//Now address of new node will be the address of the avilable node after location
+            newNode->add=preNode->add;//Now address of new node will be the address of the available node after location
             preNode->add=newNode;
             printf("Enter Data : ");
             scanf("%d",&data);
@@ -166,22 +166,113 @@ void createLoc()
 
     }
 }
+void deleteFirst()//Function to perform deletion of first Node
+{
+    node *nextNode;//nxtNode will get the address of first node
+    if(start==NULL)
+    {
+        printf("Linked list is empety\n\n\n");
+    }
+    else
+    {
+        nextNode=start;//Initializing nxtNode with address of first Node
+        start=nextNode->add;//Updating address of first Node
+        free(nextNode);//Deletion of first Node
+
+    }
+}
+void deleteLast()//Function to perform deletion of last node
+{
+    node *nxtPointer,*prePointer;//nxtPointer will point to the address of last node and prePointer will point to the address of the node just before the last node
+    if(start==NULL)
+    {
+        printf("Linked list Is Empty\n\n\n");
+    }
+    else
+    {
+        nxtPointer=start;//Initialization of nxtPointer with the address of first Node
+        prePointer=NULL;//Initialize address of previous node with NULL
+        while(nxtPointer->add!=NULL)//point to the address of the last Node
+        {
+            prePointer=nxtPointer;//point to the address of the node just before the last Node
+            nxtPointer=nxtPointer->add;//point to the address of last Node
+        }
+        if(prePointer==NULL)//if we have only single Node
+        {
+            free(nxtPointer);//deletion of first node if only first node is available
+            start=NULL;//updating start with null
+        }
+        else
+        {
+            prePointer->add=NULL;
+            free(nxtPointer);//deletion of last node
+        }
+
+    }
+}
+void deleteLoc()//Function to perform deletion operation at any give Location
+{
+    int location,nodes=1,i=1;//location will take the value of location where we have to delete the data nodes represent the no of nodes available
+    node *nxtNode,*preNode;//nxtNde will point to the address of next node and preNode will point to the address of the node just before the next node
+    if(start==NULL)
+    {
+        printf("Linked List is Empty\n\n\n");
+    }
+    else
+    {
+        preNode=start;//Initialize preNode with first node just to get no of node available
+        while(preNode->add!=NULL)
+        {
+            nodes++;
+            preNode=preNode->add;//point to the address of node till last node
+        }
+        printf("There are %d Node are Avilable \n\n",nodes);
+        display();
+        printf("Enter Location which you want to Delete : ");
+        scanf("%d",&location);
+        printf("\n\n");
+        if(location<=nodes)//check that given location is valid or not
+        {
+            nxtNode=start;//Initialize nxtNode with start and preNode with NUL
+            preNode=NULL;
+            while(i!=location)
+            {
+                preNode=nxtNode;//Get the address of node just before the given location
+                nxtNode=nxtNode->add;//get the address of the node which location is given
+                i++;
+            }
+            if(preNode==NULL)//if we have only first node avilable
+            {
+                free(nxtNode);
+                start=NULL;
+            }
+            preNode->add=nxtNode->add;//updating the address of nodes after deletion
+            free(nxtNode);//deletion of node
+        }
+        else
+        {
+            printf("Given Location is Not Valid Please Enter Carefully\n\n");
+        }
+
+    }
+
+}
 void display()
 {
-    node *addPointer;// addPointer is variable which is used for pointing the address of all avilable nodes
+    node *addPointer;// addPointer is variable which is used for pointing the address of all available nodes
     if(start==NULL)//if we do not have any data in linked list
     {
-        printf("There are no any data to Display\n");
+        printf("There are no any data to Display\n\n\n");
     }
     else
     {
         addPointer=start;//Initialize addPointer with the address of first node
-        printf("================YOUR DATA================\n");
-        while(addPointer!=NULL)//Pointing to address of all avilable nodes
+        printf("================================YOUR DATA================================\n\n");
+        while(addPointer!=NULL)//Pointing to address of all available nodes
         {
             printf("%d  ",addPointer->n);
-            addPointer=addPointer->add;//Updating addPointer with address of avilable nodes
+            addPointer=addPointer->add;//Updating addPointer with address of available nodes
         }
-        printf("\n\n");
+        printf("\n\n\n");
     }
 }
