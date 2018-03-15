@@ -146,17 +146,29 @@ void createLoc()
         if(location<=nodes)
         {
             preNode=start;
-            while(i!=location-1)
+            if(location==1)
             {
-                preNode=preNode->add;// Get the address of the node available before the given location
-                i++;
+                newNode->add=start;
+                printf("Enter Data : ");
+                scanf("%d",&data);
+                printf("\n");
+                newNode->n=data;
+                start=newNode;
             }
-            newNode->add=preNode->add;//Now address of new node will be the address of the available node after location
-            preNode->add=newNode;
-            printf("Enter Data : ");
-            scanf("%d",&data);
-            printf("\n");
-            newNode->n=data;
+            else
+            {
+                while(i!=location-1)
+                {
+                    preNode=preNode->add;// Get the address of the node available before the given location
+                    i++;
+                }
+                newNode->add=preNode->add;//Now address of new node will be the address of the available node after location
+                preNode->add=newNode;
+                printf("Enter Data : ");
+                scanf("%d",&data);
+                printf("\n");
+                newNode->n=data;
+            }
 
         }
         else
