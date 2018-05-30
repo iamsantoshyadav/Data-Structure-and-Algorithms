@@ -78,4 +78,6 @@ int sort(int *data, int *leftArray, int leftCount,int *rightArray,int rightCount
         j++;
         k++;
     }
+    free(leftArray);
+    free(rightArray);
 }
